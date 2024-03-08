@@ -1,7 +1,7 @@
 //Credits Mysterion352
 //Commissioned by MichaelK__
 
-state("pseudoregalia-Win64-Shipping")
+state("pseudoregalia-Win64-Shipping", "Full Gold Patch")
 {
     byte key1: 0x06496640, 0x1B8, 0x0339;                           //Empty Bailey Key
     byte key2: 0x06496640, 0x1B8, 0x033A;                           //Underbelly Key
@@ -20,6 +20,27 @@ state("pseudoregalia-Win64-Shipping")
     long FGUID: 0x06496640, 0x30, 0x210;                            //5185712904977434514 in menu
     double finalBossHP: 0x06496640, 0x30, 0xE8, 0x2A8, 0x638, 0xA8; //1500 when entering the bossfight; 0 when dead
     string40 area: 0x06496640, 0x1B8, 0x2A0, 0x0;                   //Use the Tuples as reference
+}
+
+state("pseudoregalia-Win64-Shipping", "Map Update")
+{
+    byte key1: 0x0649DAC0, 0x1B8, 0x0389;                           //Empty Bailey Keyx
+    byte key2: 0x0649DAC0, 0x1B8, 0x038A;                           //Underbelly Key
+    byte key3: 0x0649DAC0, 0x1B8, 0x038B;                           //Tower Key
+    byte key4: 0x0649DAC0, 0x1B8, 0x038C;                           //Sansa Keep Key
+    byte key5: 0x0649DAC0, 0x1B8, 0x04D8;                           //Twilight Key
+    byte DB: 0x0649DAC0, 0x1B8, 0x1D8, 0x8;                          //1 when picking up dream breaker, 0 when notx
+    byte empathy: 0x0649DAC0, 0x1B8, 0x1D8, 0x134;                   //Increases by 1 when picking up Empathy
+    byte GG: 0x0649DAC0, 0x1B8, 0x1D8, 0x148;                        //Increases by 1 when picking up Good Grace
+    byte CM: 0x0649DAC0, 0x1B8, 0x1D8, 0x184;                        //Increases by 1 when picking up Clear Mind
+    byte menuStart: 0x6464798;                                      //Ingame 1; Menu 0
+    int bossPhase: 0x0649DAC0, 0x30, 0xE8, 0x2A8, 0x764;    	    //1 when the boss is dead, 0 when the boss isnt dead, null when boss isnt available
+    int keyItem: 0x0649DAC0, 0x1B8, 0x4C0;                          //Use settings as reference
+    int silverKeys: 0x0649DAC0, 0x1B8, 0x1C8;                       //Incrementing value of collected silver keys
+    int healthUpgrades: 0x0649DAC0, 0x1B8, 0x260;                   //1 when collecting the first upgrade, 2 on the 2nd. 0 when fully upgraded
+    long FGUID: 0x0649DAC0, 0x30, 0x210;                            //5185712904977434514 in menu
+    double finalBossHP: 0x0649DAC0, 0x30, 0xE8, 0x2A8, 0x638, 0xA8; //1500 when entering the bossfight; 0 when dead
+    string40 area: 0x0649DAC0, 0x1B8, 0x2A0, 0x0;                   //Use the Tuples as reference
 }
 
 startup
@@ -124,6 +145,26 @@ init
         Tuple.Create("Zone_Tower", "Zone_PrincessChamber", 24),
         Tuple.Create("Zone_PrincessChamber", "Zone_Tower", 25),
     };
+
+    // Version Detection
+    string hash;
+    using (var md5 = System.Security.Cryptography.MD5.Create())
+    using (var fs = File.OpenRead(modules.First().FileName))
+        hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
+
+    switch (hash)
+    {
+        case "CBE8CDF0312460AE61976F1A8416FC8D":
+            version = "Full Gold Patch";
+            break;
+        case "665244CFAC43E8DD5C5265D728C7F26E":
+            version = "Map Update";
+            break;
+        default:
+            print("Unknown Version, please update.");
+            version = "Unknown";
+            break;
+    }
 }
 
 start
