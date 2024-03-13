@@ -1,7 +1,7 @@
 //Credits Mysterion352
 //Commissioned by MichaelK__
 
-state("pseudoregalia-Win64-Shipping")
+state("pseudoregalia-Win64-Shipping", "Full Gold Patch")
 {
     byte key1: 0x06496640, 0x1B8, 0x0339;                           //Empty Bailey Key
     byte key2: 0x06496640, 0x1B8, 0x033A;                           //Underbelly Key
@@ -14,7 +14,7 @@ state("pseudoregalia-Win64-Shipping")
     byte CM: 0x6496640, 0x1B8, 0x1D8, 0x184;                        //Increases by 1 when picking up Clear Mind
     byte menuStart: 0x645D318;                                      //Ingame 1; Menu 0
     int bossPhase: 0x06496640, 0x30, 0xE8, 0x2A8, 0x764;    	    //1 when the boss is dead, 0 when the boss isnt dead, null when boss isnt available
-    int keyItem: 0x06496640, 0x1B8, 0x470;                          //Use settings as reference
+    int keyItem: 0x06496640, 0x1B8, 0x470;                          //Use vars.ItemIDs, set after version detection, as reference
     int silverKeys: 0x06496640, 0x1B8, 0x1C8;                       //Incrementing value of collected silver keys
     int healthUpgrades: 0x06496640, 0x1B8, 0x260;                   //1 when collecting the first upgrade, 2 on the 2nd. 0 when fully upgraded
     long FGUID: 0x06496640, 0x30, 0x210;                            //5185712904977434514 in menu
@@ -22,14 +22,43 @@ state("pseudoregalia-Win64-Shipping")
     string40 area: 0x06496640, 0x1B8, 0x2A0, 0x0;                   //Use the Tuples as reference
 }
 
+state("pseudoregalia-Win64-Shipping", "Map Update")
+{
+    byte key1: 0x0649DAC0, 0x1B8, 0x0389;                           //Empty Bailey Key
+    byte key2: 0x0649DAC0, 0x1B8, 0x038A;                           //Underbelly Key
+    byte key3: 0x0649DAC0, 0x1B8, 0x038B;                           //Tower Key
+    byte key4: 0x0649DAC0, 0x1B8, 0x038C;                           //Sansa Keep Key
+    byte key5: 0x0649DAC0, 0x1B8, 0x04D8;                           //Twilight Key
+    byte DB: 0x0649DAC0, 0x1B8, 0x1D8, 0x8;                         //1 when picking up dream breaker, 0 when notx
+    byte empathy: 0x0649DAC0, 0x1B8, 0x1D8, 0x148;                  //Increases by 1 when picking up Empathy
+    byte GG: 0x0649DAC0, 0x1B8, 0x1D8, 0x15c;                       //Increases by 1 when picking up Good Grace
+    byte CM: 0x0649DAC0, 0x1B8, 0x1D8, 0x198;                       //Increases by 1 when picking up Clear Mind
+    byte menuStart: 0x6464798;                                      //Ingame 1; Menu 0
+    int bossPhase: 0x0649DAC0, 0x30, 0xE8, 0x2A8, 0x764;    	    //1 when the boss is dead, 0 when the boss isnt dead, null when boss isnt available
+    int keyItem: 0x0649DAC0, 0x1B8, 0x4C0;                          //Use vars.ItemIDs, set after version detection, as reference
+    int silverKeys: 0x0649DAC0, 0x1B8, 0x1C8;                       //Incrementing value of collected silver keys
+    int healthUpgrades: 0x0649DAC0, 0x1B8, 0x260;                   //1 when collecting the first upgrade, 2 on the 2nd. 0 when fully upgraded
+    long FGUID: 0x0649DAC0, 0x30, 0x210;                            //5185712904977434514 in menu
+    double finalBossHP: 0x0649DAC0, 0x30, 0xE8, 0x2A8, 0x638, 0xA8; //1500 when entering the bossfight; 0 when dead
+    string40 area: 0x0649DAC0, 0x1B8, 0x2A0, 0x0;                   //Use the Tuples as reference
+}
+
 startup
 {
-    vars.itemIDSettings = new List<String>()
-    {"Indignation", "Slide", "Solar Wind", "Air Kick - Sun Greaves", "Plunge", "Cling", "Bright Soul - Ascendant Light", "Strikebreak", "Soul Cutter", "Clear Mind", "Empathy",
-    "Good Graces", "Martial Power", "Pilgrimage", "Aerial Finesse", "Heliiacal Power", "Professionalism"};
-
-    vars.itemIDs = new List<int>()
-    {8, 2, 9, 1, 3, 4, 5, 11, 6, 19, 15, 16, 17, 14, 13, 12, 20};
+    vars.itemIDSettings = new Dictionary<String,String>()           //Setting ID, Setting Display Name
+    {   //Item Splits
+        {"dreamBreaker","Dream Breaker"},{"indignation","Indignation"},{"slide","Slide"},
+        {"solarWind","Solar Wind"},{"airKick","Sun Greaves"},{"plunge","Plunge"},{"cling","Cling"},
+        {"brightSoul","Ascendant Light"},{"strikebreak","Strikebreak"},{"soulCutter","Soul Cutter"},
+        //Sub Splits
+        {"clearMind","Clear Mind"},{"empathy","Empathy"},{"goodGraces","Good Graces"},
+        {"martialPower","Martial Power"},{"pilgrimage","Pilgrimage"},
+        {"aerialFinesse","Aerial Finesse"},{"heliiacalPower","Heliiacal Power"},{"map","Memento(Map)"},
+        //Costume Splits
+        {"professionalism","Professionalism (Castle Sansa)"},{"guardian","Guardian (Sansa Keep)"},
+        {"chivalry","Chivalry (Empty Bailey)"},{"bleedingHeart","Bleeding Heart (Tower Remains)"},
+        {"nostalgia","Nostalgia (The Underbelly)"},{"devotion","Devotion (Dillapidated Dungeon)"},
+        {"class","Class (Twilight Theater)"},{"sweater","Sweater (Listless Library)"}};
 
     vars.areaSettings = new List<String>()
     {"Dilapidated Dungeon > Castle Sansa", "Dilapidated Dungeon > The Underbelly", "Dilapidated Dungeon > Twilight Theatre", "Castle Sansa > Dilapidated Dungeon",
@@ -57,18 +86,20 @@ startup
     //settings.Add("Silver Keys");
     settings.Add("Health Upgrades");
     settings.Add("Item Splits");
-    settings.CurrentDefaultParent = "Item Splits";
-    settings.Add("db", true, "Dream Breaker");
-    settings.CurrentDefaultParent = null;
     settings.Add("Sub Splits");
-    for(int i = 0; i <= 16; i++){
-        if(i <= 8){
+    settings.Add("Costume Splits");
+    int iterator = 0;
+    foreach(var item in vars.itemIDSettings){
+        if(iterator <= 9){
             settings.CurrentDefaultParent = "Item Splits";
         }
-        if(i >= 9){
+        if(10 <= iterator && iterator <= 18){
             settings.CurrentDefaultParent = "Sub Splits";
         }
-        settings.Add("" + vars.itemIDs[i].ToString(), true, "" + vars.itemIDSettings[i].ToString());
+        if(iterator >= 18){
+            settings.CurrentDefaultParent = "Costume Splits";
+        }
+        settings.Add("" + item.Key, true, "" + item.Value);        iterator++;
     }
     settings.CurrentDefaultParent = null;
     settings.Add("Area Splits");
@@ -124,6 +155,33 @@ init
         Tuple.Create("Zone_Tower", "Zone_PrincessChamber", 24),
         Tuple.Create("Zone_PrincessChamber", "Zone_Tower", 25),
     };
+
+    // Version Detection
+    string hash;
+    using (var md5 = System.Security.Cryptography.MD5.Create())
+    using (var fs = File.OpenRead(modules.First().FileName))
+        hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
+
+    switch (hash)
+    {
+        case "CBE8CDF0312460AE61976F1A8416FC8D":
+            version = "Full Gold Patch";
+            vars.itemIDs = new Dictionary<int, String>(){
+                {0,"dreamBreaker"},{1, "airKick"},{2, "slide"},{3, "plunge"},{4, "cling"},{5, "brightSoul"},{6, "soulCutter"},{8, "indignation"},{9, "solarWind"},{11, "strikebreak"},
+                {12, "heliiacalPower"},{13, "aerialFinesse"},{14, "pilgrimage"},{15, "empathy"},{16, "goodGraces"},{17, "martialPower"},{19, "clearMind"},{20, "professionalism"}};
+            break;
+        case "665244CFAC43E8DD5C5265D728C7F26E":
+            version = "Map Update";
+            vars.itemIDs = new Dictionary<int, String>(){
+                {0,"dreamBreaker"},{1, "airKick"},{2, "slide"},{3, "plunge"},{4, "cling"},{5, "brightSoul"},{6, "soulCutter"},{8, "indignation"},{9, "solarWind"},{11, "strikebreak"},
+                {12, "map"},{13, "heliiacalPower"},{14, "aerialFinesse"},{15, "pilgrimage"},{16, "empathy"},{17, "goodGraces"},{18, "martialPower"},{20, "clearMind"},
+                {21, "professionalism"},{22, "guardian"},{23, "chivalry"},{24, "bleedingHeart"},{25, "nostalgia"},{26, "devotion"},{27, "class"},{28, "sweater"}};
+            break;
+        default:
+            print("Unknown Version, please update.");
+            version = "Unknown";
+            break;
+    }
 }
 
 start
@@ -195,45 +253,45 @@ split
     }
 
     if(settings["Item Splits"] || settings["Sub Splits"]){
-        if(settings[current.keyItem.ToString()] && !vars.completedSplits.Contains(current.keyItem) && current.keyItem != 19 && current.keyItem != 15 && current.keyItem != 16){
+        if(settings[vars.itemIDs[current.keyItem]] && !vars.completedSplits.Contains(current.keyItem)
+                    && vars.itemIDs[current.keyItem] != "dreamBreaker" && vars.itemIDs[current.keyItem] != "empathy" && vars.itemIDs[current.keyItem] != "goodGraces" && vars.itemIDs[current.keyItem] != "clearMind"){
             vars.completedSplits.Add(current.keyItem);
-            vars.LastSplitDebug = "Item Splits: " + vars.itemIDSettings[vars.itemIDs.IndexOf(current.keyItem)].ToString();
+            vars.LastSplitDebug = "IS: " + vars.itemIDSettings[vars.itemIDs[current.keyItem]];
             return true;
         }
-        if(settings["db"] && current.DB == 1 && old.DB == 0 && current.area == old.area && vars.dbPickUp == 0){
+        if(settings["dreamBreaker"] && current.DB == 1 && old.DB == 0 && current.area == old.area && vars.dbPickUp == 0){
             vars.dbPickUp = 1;
-            vars.LastSplitDebug = "Item Splits: Dream Breaker";
+            vars.LastSplitDebug = "IS: Dream Breaker";
             return true;
         }
-        if((current.empathy > old.empathy && vars.empathy == 1 && old.empathy != 0 || current.GG > old.GG && vars.gg == 1 && old.GG != 0 || current.CM > old.CM && vars.cm == 1 && old.CM != 0) &&
-         settings[current.keyItem.ToString()]){
-            vars.LastSplitDebug = "Item Splits: " + vars.itemIDSettings[vars.itemIDs.IndexOf(current.keyItem)].ToString();
+        if(settings[vars.itemIDs[current.keyItem]] && (
+                        (current.empathy > old.empathy && vars.empathy == 1 && old.empathy != 0)
+                        || (current.GG > old.GG && vars.gg == 1 && old.GG != 0)
+                        || (current.CM > old.CM && vars.cm == 1 && old.CM != 0))){
+            vars.LastSplitDebug = "IS: Multi " + vars.itemIDSettings[vars.itemIDs[current.keyItem]];
             return true;
         }
-
-        if(current.empathy > old.empathy && vars.empathy == 0 && settings[current.keyItem.ToString()]){
+        if(current.empathy > old.empathy && vars.empathy == 0 && settings[vars.itemIDs[current.keyItem]]){
             vars.empathy = 1;
-            vars.LastSplitDebug = "Item Splits: First Empathy";
+            vars.LastSplitDebug = "IS: First Empathy";
             return true;
         }
-
-        if(current.GG > old.GG && vars.gg == 0 && settings[current.keyItem.ToString()]){
+        if(current.GG > old.GG && vars.gg == 0 && settings[vars.itemIDs[current.keyItem]]){
             vars.gg = 1;
-            vars.LastSplitDebug = "Item Splits: First Good Graces";
+            vars.LastSplitDebug = "IS: First Good Graces";
             return true;
         }
-
-        if(current.CM > old.CM && vars.cm == 0 && settings[current.keyItem.ToString()]){
+        if(current.CM > old.CM && vars.cm == 0 && settings[vars.itemIDs[current.keyItem]]){
             vars.cm = 1;
-            vars.LastSplitDebug = "Item Splits: First Clear Mind";
+            vars.LastSplitDebug = "IS: First Clear Mind";
             return true;
         }
     }
 
     if(settings["Area Splits"]){
         for(int i = 0; i < 26; i++){
-            if(settings["A" + i] && vars.areaSplit.Contains(Tuple.Create(Convert.ToString(old.area), Convert.ToString(current.area), i))){
-                vars.LastSplitDebug = "Area Splits: " + vars.areaSettings[i].ToString();
+            if(settings["A" + i] && vars.areaSplit.Contains(Tuple.Create<string,string,int>(Convert.ToString(old.area), Convert.ToString(current.area), i))){
+                vars.LastSplitDebug = "AS: " + vars.areaSettings[i].ToString();
                 return true;
             }
         }
