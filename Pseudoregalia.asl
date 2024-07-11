@@ -252,7 +252,7 @@ split
         }
     }
 
-    if(settings["Item Splits"] || settings["Sub Splits"]){
+    if(settings["Item Splits"] || settings["Sub Splits"] || settings["Costume Splits"]){
         if(settings[vars.itemIDs[current.keyItem]] && !vars.completedSplits.Contains(current.keyItem)
                     && vars.itemIDs[current.keyItem] != "dreamBreaker" && vars.itemIDs[current.keyItem] != "empathy" && vars.itemIDs[current.keyItem] != "goodGraces" && vars.itemIDs[current.keyItem] != "clearMind"){
             vars.completedSplits.Add(current.keyItem);
