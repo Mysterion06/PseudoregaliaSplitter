@@ -265,23 +265,23 @@ split
             return true;
         }
         if(settings[vars.itemIDs[current.keyItem]] && (
-                        (current.empathy > old.empathy && vars.empathy == 1 && old.empathy != 0)
-                        || (current.GG > old.GG && vars.gg == 1 && old.GG != 0)
-                        || (current.CM > old.CM && vars.cm == 1 && old.CM != 0))){
+                        (current.empathy > old.empathy && vars.empathy == 1 && old.empathy != 0 && vars.itemIDs[current.keyItem] == "empathy")
+                        || (current.GG > old.GG && vars.gg == 1 && old.GG != 0 && vars.itemIDs[current.keyItem] == "goodGraces")
+                        || (current.CM > old.CM && vars.cm == 1 && old.CM != 0 && vars.itemIDs[current.keyItem] == "clearMind"))){
             vars.LastSplitDebug = "IS: Multi " + vars.itemIDSettings[vars.itemIDs[current.keyItem]];
             return true;
         }
-        if(current.empathy > old.empathy && vars.empathy == 0 && settings[vars.itemIDs[current.keyItem]]){
+        if(current.empathy > old.empathy && vars.empathy == 0 && settings["empathy"] && vars.ItemIDs[current.keyItem] == "empathy"){
             vars.empathy = 1;
             vars.LastSplitDebug = "IS: First Empathy";
             return true;
         }
-        if(current.GG > old.GG && vars.gg == 0 && settings[vars.itemIDs[current.keyItem]]){
+        if(current.GG > old.GG && vars.gg == 0 && settings["goodGraces"] && vars.ItemIDs[current.keyItem] == "goodGraces"){
             vars.gg = 1;
             vars.LastSplitDebug = "IS: First Good Graces";
             return true;
         }
-        if(current.CM > old.CM && vars.cm == 0 && settings[vars.itemIDs[current.keyItem]]){
+        if(current.CM > old.CM && vars.cm == 0 && settings["clearMind"] && vars.ItemIDs[current.keyItem] == "clearMind"){
             vars.cm = 1;
             vars.LastSplitDebug = "IS: First Clear Mind";
             return true;
