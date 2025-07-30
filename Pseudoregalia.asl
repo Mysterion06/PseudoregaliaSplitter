@@ -333,9 +333,6 @@ update{
 
 onStart
 {
-    // This makes sure the timer always starts at 0.00
-    timer.IsGameTimePaused = true;
-
     // This makes sure the variables are setup accordingly when starting from an old save
     vars.completedSplits.Clear();
     vars.completedSplits.Add(current.keyItem);
@@ -350,10 +347,4 @@ onStart
     vars.tower = current.key3 >= 1 ? 1 : 0;
     vars.sansa = current.key4 >= 1 ? 1 : 0;
     vars.twilight = current.key5 >= 1 ? 1 : 0;
-}
-
-exit
-{
-    //pauses timer if the game crashes
-	timer.IsGameTimePaused = true;
 }
